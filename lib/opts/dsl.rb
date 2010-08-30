@@ -16,10 +16,9 @@ module Opts::DSL
     def parser
       @parser ||= begin
         @class_builder   ||= Opts::Builder.new
-        @class_opts      ||= Opts::OptionParser.new
         @command_parser  ||= Opts::CommandParser.new
         
-        @class_builder.use @class_opts
+        @class_builder.use @class_opts if @class_opts
         @class_builder.run @command_parser
         
         @class_builder.to_app
@@ -54,11 +53,9 @@ module Opts::DSL
     def method_added(m)
       @command_parser  ||= Opts::CommandParser.new
       @command_builder ||= Opts::Builder.new
-      @command_opts    ||= Opts::OptionParser.new
-      @command_args    ||= Opts::ArgumentParser.new
       
-      @command_builder.use @command_opts
-      @command_builder.use @command_args
+      @command_builder.use @command_opts if @command_opts
+      @command_builder.use @command_args if @command_args
       @command_builder.run lambda { |env, args|
         env[:stack].last.__send__(m, env, args)
       }
