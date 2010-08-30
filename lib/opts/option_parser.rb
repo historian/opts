@@ -34,6 +34,8 @@ class Opts::OptionParser
 private
   
   def parse(env, args)
+    defined_opts = []
+    
     while args.first =~ /^(?:--([^-][^=]*)|-([^=-]))(?:=(.+))?$/
       args.shift
       
@@ -92,7 +94,18 @@ private
         raise Opts::InvalidOptionError, "Invalid option --#{name}"
       end
       
+      defined_opts << long_name
       env[long_name] = value
+    end
+    
+    (@options.keys - defined_opts).each do |name|
+      option = @options[name]
+      
+      if option[:default]
+        env[name] = option[:default]
+      elsif option[:required]
+        raise Opts::InvalidOptionError, "#{name} is a required option"
+      end
     end
   end
   
