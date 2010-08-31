@@ -8,13 +8,14 @@ module Opts
 
   require 'opts/version'
   require 'opts/validations'
-  require 'opts/option_parser'
-  require 'opts/argument_parser'
-  require 'opts/command_parser'
   require 'opts/builder'
-  require 'opts/environment'
-  require 'opts/shell'
   require 'opts/dsl'
-  require 'opts/man_help'
+
+  require 'opts/middleware/argument_parser'
+  require 'opts/middleware/command_parser'
+  require 'opts/middleware/environment'
+  require 'opts/middleware/man_help'
+  require 'opts/middleware/option_parser'
+  require 'opts/middleware/shell'
 
 end
