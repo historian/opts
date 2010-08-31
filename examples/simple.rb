@@ -3,7 +3,7 @@ require 'opts'
 
 class CLI
   include Opts
-  
+
   def initialize
     cli = self
     @opts = Opts::Builder.new do
@@ -28,19 +28,19 @@ class CLI
       run lambda { raise Error }
     end
   end
-  
+
   def call(env, args)
     @opts.call(env, args)
   end
-  
+
   def pack(env, args)
-    env[:shell].say [env, args].inspect, :green
+    env['opts.shell'].say [env, args].inspect, :green
   end
-  
+
   def deploy(env, args)
     p [env, args]
   end
-  
+
 end
 
 packer = CLI.new

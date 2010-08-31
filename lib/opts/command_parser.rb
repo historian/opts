@@ -26,7 +26,7 @@ class Opts::CommandParser
     
     raise Opts::UnknownCommandError, "Unknown command #{cmd_name}" unless cmd
     
-    (env[:commands] ||= []) << cmd_name
+    (env['commands'] ||= []) << cmd_name
     cmd[:app].call(env, args[1..-1])
   end
   
