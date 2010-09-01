@@ -14,6 +14,7 @@ module Opts
   require 'opts/middleware/argument_parser'
   require 'opts/middleware/command_parser'
   require 'opts/middleware/environment'
+  require 'opts/middleware/error_handler'
   require 'opts/middleware/man_help'
   require 'opts/middleware/option_parser'
   require 'opts/middleware/shell'

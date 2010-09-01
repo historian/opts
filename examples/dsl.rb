@@ -11,6 +11,7 @@ class CLI
     :path    => "/Library/Ruby/Gems/1.8/gems/passenger-2.2.15/man",
     :default => 'passenger-make-enterprisey.8'
 
+  class_option 'debug',   :short => 'd', :type => :boolean
   class_option 'verbose', :short => 'v', :type => :boolean
   class_option 'path',    :short => 'p', :type => :string
 

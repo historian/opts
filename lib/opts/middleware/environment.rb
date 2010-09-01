@@ -6,18 +6,15 @@ class Opts::Environment
   end
 
   def call(env, args)
-    other_env = ENV.to_hash
+    _env = ENV.to_hash
 
-    if @prefix
-      other_env = other_env.inject({}) do |memo, (key, value)|
-        if key.index(@prefix) == 0
-          memo[key.sub(@prefix, '')] = value
-        end
-        memo
+    _env.each do |key, value|
+      if @prefix and key.index(@prefix) == 0
+        env[key.sub(@prefix, '')] ||= value
+      elsif !@prefix
+        env[key] ||= value
       end
     end
-
-    env = other_env.merge(env)
 
     @app.call(env, args)
   end

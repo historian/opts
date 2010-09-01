@@ -82,12 +82,13 @@ class Opts::Shell
     $stdout.flush
   end
 
-  def status(type, message, log_status=true)
+  def status(status, message, log_status=true)
     return if quiet? || log_status == false
     spaces = "  " * (padding + 1)
     color  = log_status.is_a?(Symbol) ? log_status : :green
 
     status = status.to_s.rjust(12)
+    message = message.gsub("\n", "\n" + (" " * (status.length + spaces.length)))
     status = set_color status, color, true if color
 
     $stdout.puts "#{status}#{spaces}#{message}"

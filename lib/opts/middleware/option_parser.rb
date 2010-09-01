@@ -17,7 +17,7 @@ class Opts::OptionParser
   end
 
   def call(env, args)
-    new_env, new_args = env.dup, args.dup
+    new_env, new_args = env, args.dup
     parse(new_env, new_args)
     @app.call(new_env, new_args)
   end
