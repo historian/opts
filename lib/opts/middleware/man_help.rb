@@ -6,10 +6,10 @@ class Opts::ManHelp
   end
 
   def call(env, args)
-    _help, env['man.help'] = env['man.help'], self
+    _help, env['opts.man_help'] = env['opts.man_help'], self
     @app.call(env, args)
   ensure
-    env['man.help'] = _help
+    env['opts.man_help'] = _help
   end
 
   def exec(env, args)
@@ -18,6 +18,10 @@ class Opts::ManHelp
 
   def show(env, args)
     Kernel.system "man #{find_man_page(env, args).inspect}"
+  end
+
+  def inspect
+    "#<#{self.class} #{@options[:path]}>"
   end
 
 private

@@ -28,7 +28,7 @@ class CLI
   end
 
   def help(env, args)
-    env['man.help'].exec(env, args)
+    env['opts.man_help'].exec(env, args)
   end
 
 end
