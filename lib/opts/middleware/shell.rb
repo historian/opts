@@ -27,19 +27,19 @@ class Opts::Shell
     @app     = app
     @options = { :color => true }.merge(options)
     @padding = 0
-    @quite   = false
+    @quiet   = false
   end
 
   def call(env, args)
     env['opts.shell'] = self
 
-    _quite = @quite
-    @quite = env['QUITE']
+    _quiet = @quiet
+    @quiet = env['QUITE']
 
     @app.call(env, args)
 
   ensure
-    @quite = _quite
+    @quiet = _quiet
   end
 
   def with_padding(padding)
@@ -54,20 +54,20 @@ class Opts::Shell
     @padding
   end
 
-  def with_quite(quite=true)
-    _quite = @quite
-    @quite = quite
+  def with_quiet(quiet=true)
+    _quiet = @quiet
+    @quiet = quiet
     yield
   ensure
-    @quite = _quite
+    @quiet = _quiet
   end
 
-  def quite?
-    @quite
+  def quiet?
+    @quiet
   end
 
   def say(message="", color=nil, force_new_line=(message.to_s !~ /( |\t)$/))
-    return if quite?
+    return if quiet?
 
     message = message.to_s
     message = set_color(message, color) if color
