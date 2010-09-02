@@ -12,8 +12,9 @@ Given /^a (\w+) table:$/ do |name, table|
 end
 
 When /^executed with (\w+) in the (\w+) table$/ do |var, table|
+  @results ||= {}
+  results  = (@results[table] = [])
   table    = @tables[table]
-  @results = []
 
   table.each do |env|
     args = env[var]
@@ -23,12 +24,14 @@ When /^executed with (\w+) in the (\w+) table$/ do |var, table|
 
     env = env.dup
     env.delete(var)
-    @results << [args, env, real_env]
+    results << [args, env, real_env]
   end
 end
 
 Then /^the environment must match (\w+) in the (\w+) table$/ do |var, table|
-  @results.each do |(args, env, result)|
+  @results ||= {}
+  results = @results[table]
+  results.each do |(args, env, result)|
     unless eval(env[var]) == result[var]
       raise "expected #{env[var].inspect} but got #{result[var].inspect}"
     end
