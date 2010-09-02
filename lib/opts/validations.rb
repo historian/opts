@@ -17,9 +17,9 @@ module Opts::Validations
     case value
     when nil
       nil
-    when /^t(rue)?|y(es)?$/i
+    when /^t(rue)?|y(es)?|on$/i
       true
-    when /^f(alse)?|n(o)?$/i
+    when /^f(alse)?|n(o)?|off$/i
       false
     else
       yield(value)

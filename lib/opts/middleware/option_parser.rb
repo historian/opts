@@ -38,14 +38,19 @@ private
   def parse(env, args)
     defined_opts = []
 
-    while args.first =~ /^(?:--(no(?:t)-)?([^-][^=]*)|-([^=-]))(?:=(.+))?$/
+    while args.first =~ /^(?:--(no(?:t)?-)?([^-][^=]*)|-([^=-]))(?:=(.+))?$/
       args.shift
 
       long_name, short_name = $2, $3
       negation, value       = $1, $4
-      name                  = "--#{long_name}" || "-#{short_name}"
+      name                  = long_name ? "--#{long_name}" : "-#{short_name}"
       long_name           ||= @short_names[short_name]
+      long_name           ||= @short_names[short_name.downcase]
       option                = @options[long_name]
+
+      if short_name and short_name.upcase == short_name
+        negation = true
+      end
 
       unless option
         raise Opts::UnknownOptionError, "Unknown option #{name}"
